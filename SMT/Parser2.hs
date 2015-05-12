@@ -18,9 +18,9 @@ expr = buildExpressionParser table term
 parens :: Parsec String () a -> Parsec String () a
 parens p = string "(" *> spaces *> p <* spaces <* string ")"
 
-term = parens expr
-    <|> string "T" *> spaces *> (pure (B True))
-    <|> string "F" *> spaces *> (pure (B False))
+term = parens expr <* spaces
+    <|> string "T" *> spaces *> (pure T)
+    <|> string "F" *> spaces *> (pure F)
     <|> (Var) <$> many1 letter <* spaces
     <?> "simple expression"
 
